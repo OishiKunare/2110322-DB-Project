@@ -87,6 +87,7 @@ CREATE TABLE persons (
     first_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(100),
     last_name VARCHAR(100) NOT NULL
+);
 
 -- =========================
 -- ROLES & PERMISSIONS
