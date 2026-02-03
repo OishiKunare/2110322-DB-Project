@@ -40,3 +40,33 @@ GROUP BY
     u.email
 ORDER BY
     total_spent DESC;
+
+-- =========================
+-- scenarios: Top 5 best room that you need to try.
+-- =========================
+SELECT
+  b.hotel_id,
+  h.name AS hotel_name,
+  b.room_number,
+  COUNT(*) AS booking_count
+FROM bookings b
+JOIN hotels h ON h.hotel_id = b.hotel_id
+WHERE b.status IN ('confirmed', 'checked_in', 'checked_out')
+GROUP BY b.hotel_id, h.name, b.room_number
+ORDER BY booking_count DESC, b.hotel_id ASC, b.room_number ASC
+LIMIT 5;
+
+-- =========================
+-- scenarios: total booking for each hotel.
+-- =========================
+SELECT
+  h.hotel_id,
+  h.name AS hotel_name,
+  COUNT(*) AS booking_count
+FROM hotels h
+JOIN bookings b
+  ON h.hotel_id = b.hotel_id
+WHERE b.status IN ('confirmed', 'checked_in', 'checked_out')
+GROUP BY h.hotel_id, h.name
+ORDER BY booking_count DESC;
+
