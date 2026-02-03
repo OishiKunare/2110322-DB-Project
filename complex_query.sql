@@ -70,3 +70,20 @@ WHERE b.status IN ('confirmed', 'checked_in', 'checked_out')
 GROUP BY h.hotel_id, h.name
 ORDER BY booking_count DESC;
 
+-- =========================
+-- scenarios: calculate the average number of days between the booking date and check-in date.
+-- =========================
+SELECT
+    h.name AS hotel_name,
+    COUNT(b.booking_id) AS total_bookings,
+    ROUND(AVG(b.check_in_date - b.booking_date::DATE), 1) AS avg_days_booked_in_advance
+FROM
+    hotels h
+JOIN
+    bookings b ON h.hotel_id = b.hotel_id
+WHERE
+    b.status IN ('confirmed', 'checked_in', 'checked_out')
+GROUP BY
+    h.hotel_id, h.name
+ORDER BY
+    avg_days_booked_in_advance DESC;
